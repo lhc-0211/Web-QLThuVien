@@ -1,0 +1,162 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+
+@model List<Sach>
+<section id="billboard">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <button class="prev slick-arrow">
+                    <i class="icon icon-arrow-left"></i>
+                </button>
+
+                <div class="main-slider pattern-overlay">
+                    <div class="slider-item">
+                        <div class="banner-content">
+                            <h2 class="banner-title">Life of the Wild</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis urna, a eu.</p>
+                            <div class="btn-wrap">
+                                <a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i class="icon icon-ns-arrow-right"></i></a>
+                            </div>
+                        </div><!--banner-content-->
+                        <img src="../Library/images/main-banner1.jpg" alt="banner" class="banner-image">
+                    </div><!--slider-item-->
+
+                    <div class="slider-item">
+                        <div class="banner-content">
+                            <h2 class="banner-title">Birds gonna be Happy</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis urna, a eu.</p>
+                            <div class="btn-wrap">
+                                <a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i class="icon icon-ns-arrow-right"></i></a>
+                            </div>
+                        </div><!--banner-content-->
+                        <img src="../Library/images/main-banner2.jpg" alt="banner" class="banner-image">
+                    </div><!--slider-item-->
+
+                </div><!--slider-->
+
+                <button class="next slick-arrow">
+                    <i class="icon icon-arrow-right"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section id="special-offer" class="bookshelf">
+
+    <div class="section-header align-center">
+        <h2 class="section-title">Trending</h2>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="inner-content">
+                <div class="product-list" data-aos="fade-up">
+                    <div class="grid product-grid">
+
+                        @foreach (var T in ViewBag.Trending)
+                        {
+                            <figure class="product-style">
+                                <img src="../ImagesBook/@T.TenFileAnhDd" alt="Books" class="product-item" style="height:400px">
+
+                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
+                                <figcaption>
+                                    <a asp-controller="Home" asp-action="ChiTietSach" asp-route-masach="@T.MaSach" style="text-decoration: none;">
+                                        <h3 style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">@T.TenSach</h3>
+                                        <p>@T.TacGia</p>
+                                    </a>
+                                </figcaption>
+                            </figure>
+                        }
+                    </div><!--grid-->
+                </div>
+            </div><!--inner-content-->
+        </div>
+    </div>
+</section>
+
+<section id="featured-books">
+    <div class="container">
+        <div class="row">
+            <div class="inner-content">
+                <div class="section-header align-center">
+                    <h2 class="section-title">Newest</h2>
+                </div>
+                <div class="product-list" data-aos="fade-up">
+                    <div class="grid product-grid">
+
+                        @foreach (var N in ViewBag.Newest)
+                        {
+                            <figure class="product-style">
+                                <img src="../ImagesBook/@N.TenFileAnhDd" alt="Books" class="product-item" style="height:400px">
+
+                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
+                                <figcaption>
+                                    <a asp-controller="Home" asp-action="ChiTietSach" asp-route-masach="@N.MaSach" style="text-decoration: none;">
+                                        <h3 style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">@N.TenSach</h3>
+                                        <p>@N.TacGia</p>
+                                    </a>
+                                </figcaption>
+                            </figure>
+                        }
+                    </div><!--grid-->
+                </div>
+            </div><!--inner-content-->
+        </div>
+    </div>
+
+
+
+
+</section>
+
+
+<section id="popular-books" class="bookshelf">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-header align-center">
+                    <h2 class="section-title">Popular Books</h2>
+                </div>
+                <ul class="tabs">
+                    @*@foreach (var Loai in ViewBag.Loais)
+                    {
+                    <li data-tab-target="#all-genre" class="active tab">@Loai.TenTheLoai</li>
+                    }*@
+                    @await Component.InvokeAsync("LoaiSpMenu")
+                </ul>
+                @foreach (var item in Model)
+                {
+                    <div class="tab-content">
+                        <div class="col-md-3 ">
+                            <figure class="product-style">
+                                <img src=@Url.Content("../ImagesBook/" +@item.TenFileAnhDd ) alt="Books" class="product-item" style="height:350px">
+
+                                <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Add to Cart</button>
+                                <figcaption>
+                                    <a asp-controller="Home" asp-action="ChiTietSach" asp-route-masach="@item.MaSach" style="text-decoration: none;">
+                                        <h3 style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">@item.TenSach</h3>
+                                        <p>@item.TacGia</p>
+                                    </a>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                }
+            </div><!--inner-tabs-->
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-wrap align-right">
+                    @Html.ActionLink("View all products", "HienSanPham")
+                    <i class="icon icon-ns-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

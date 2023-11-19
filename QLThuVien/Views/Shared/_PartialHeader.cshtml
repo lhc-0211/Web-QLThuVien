@@ -1,0 +1,62 @@
+﻿@inject IHttpContextAccessor httpContextAccessor
+@{
+    var username = httpContextAccessor.HttpContext.Session.GetString("Username");
+    var loaiUser = httpContextAccessor.HttpContext.Session.GetString("LoaiUser");
+    var anhDaiDien = httpContextAccessor.HttpContext.Session.GetString("AnhDaiDien");
+}
+<header id="header-wrap">
+    <div class="top-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 logo">
+                    <!-- Sử dụng lớp col-md-6 cho màn hình window và col-12 cho các màn hình khác -->
+                    <a asp-asp-controller="Home" asp-action="Index"><img src="../Library/images/logo.png"></a>
+                </div>
+                <div class="col-md-6 col-sm-6 menu2" style="padding-right:100px;">
+                    <!-- Sử dụng lớp col-md-6 cho màn hình window và col-12 cho các màn hình khác -->
+                    <div class="action-menu">
+                        <div class="search-bar">
+                            <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+                                <i class="icon icon-search"></i>
+                            </a>
+                            <form role="search" method="get" class="search-box">
+                                <input class="search-field text search-input" placeholder="Search" type="search">
+                            </form>
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(username))
+                    {
+
+                        <div class="dropdown">
+                            <a class="user-account for-buy">
+                                <i class="bi bi-person-circle"></i>
+                                <span>@username</span>
+                            </a>
+                            <div class="dropdown-content" hidden>
+                                @if (loaiUser == null)
+                                {
+                                    <a asp-action="Privacy"><i class="bi bi-file-person"></i>Tài khoản</a>
+                                }
+                                else
+                                {
+                                    <a asp-area="Admin" asp-controller="HomeAdmin" asp-action="DanhMucSach"><i class="bi bi-file-person"></i>Dashboard</a>
+                                }
+
+                                <a asp-controller="Access" asp-action="Logout"><i class="bi bi-box-arrow-left"></i> Log out</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Nếu chưa đăng nhập, hiển thị nút đăng nhập -->
+                        <a asp-controller="Access" asp-action="Login" class="user-account for-buy">
+                            <i class="bi bi-person-circle"></i>
+                            <span>Login</span>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div><!--top-content-->
+    <div class="hamburger"></div>
+</header>
